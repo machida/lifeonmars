@@ -1,0 +1,14 @@
+%p#notice= notice
+%p
+  %b Name:
+  = @item.name
+%p
+  %b Description:
+  = @item.description
+- if @done = true
+  %p 完了
+- else
+  %p 未観
+
+= link_to 'Edit', edit_item_path(@item)
+= link_to 'Back', items_path

@@ -1,0 +1,10 @@
+%h1 Listing items
+.items
+- @items.each do |item|
+  .item
+    %h2= item.name
+    = simple_format(item.description)
+    = link_to 'Show', item
+    = link_to 'Edit', edit_item_path(item)
+    = link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' }
+= link_to 'New Item', new_item_path

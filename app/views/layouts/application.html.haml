@@ -1,0 +1,28 @@
+!!!
+%html
+  %head
+    %title= Settings.app_name
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    %header
+      %h1= link_to Settings.app_name, :root
+      %nav#global
+        %ul
+          - if session[:user_id].blank?
+            %li= link_to "Login", "/auth/#{Settings.provider}"
+          - else
+            - if current_user.screen_name == "machida"
+              %li= link_to_unless( current_user.screen_name.blank?, image_tag( current_user.image, size: "18x18", class: "margin_minus2" ), "#{Settings.provider_page}#{current_user.screen_name}", target: "_blank" )
+              %li= link_to( "Logout", logout_path )
+              %li= link_to "オススメ", "/items"
+            - else
+              %li= link_to_unless( current_user.screen_name.blank?, image_tag( current_user.image, size: "18x18", class: "margin_minus2" ), "#{Settings.provider_page}#{current_user.screen_name}", target: "_blank" )
+              %li= link_to( "Logout", logout_path )
+              %li= link_to "オススメ", "/items"
+            
+    .container
+      = simple_format( flash[:notice], style: "color: green;" ) unless flash[:notice].blank?
+      = simple_format( flash[:alert], style: "color: red;" ) unless flash[:alert].blank?
+      = yield
