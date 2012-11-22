@@ -4,20 +4,19 @@
     = text_field_tag 'keyword', @keyword
     = submit_tag '検索'
 %section.amazon
-  %h2 検索結果
-  %form{:action => "/items/new", :method => "post"}
-    - if @res.present?
-      .items
-        - @res.items.each do |i|
-          .item
-            .image
-              = link_to "/items/new" do
-                = image_tag i.get('SmallImage/URL'), {:style => 'border: none;'}
-            .asin= i.get('ASIN')
-            .title= i.get('ItemAttributes/Title')
-    - else
-      %p.empty
-        見つかりませんでした
+  %h2 検索結果    
+  - if @res.present?
+    .items
+      - @res.items.each do |i|
+        .item
+          .image
+            = link_to "/items/new" do
+              = image_tag i.get('SmallImage/URL'), {:style => 'border: none;'}
+          .asin= i.get('ASIN')
+          .title= i.get('ItemAttributes/Title')
+  - else
+    %p.empty
+      見つかりませんでした
 
 %section.items
   %h1 みんなのオススメ
