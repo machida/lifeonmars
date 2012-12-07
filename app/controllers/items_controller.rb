@@ -14,7 +14,6 @@ class ItemsController < ApplicationController
   # GET /items/1.json
   def show
     @item = Item.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @item }
@@ -24,8 +23,14 @@ class ItemsController < ApplicationController
   # GET /items/new
   # GET /items/new.json
   def new
-    @item = Item.new
-
+    ecs_response = Amazon::Ecs.item_lookup(params[:ASIN], :response_group => 'Medium')
+    
+    ecs_data = ecs_response.items.first
+    title = ecs_data.get('ItemAttributes/Title')
+    image = ecs_data.get('LargeImage/URL')
+    
+    @item = Item.new({:name => title, :image => image})
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @item }

@@ -10,10 +10,11 @@
       - @res.items.each do |i|
         .item
           .image
-            = link_to "/items/new" do
-              = image_tag i.get('SmallImage/URL'), {:style => 'border: none;'}
+            = link_to new_item_path(:ASIN => i.get('ASIN')) do
+              = image_tag i.get('LargeImage/URL')
           .asin= i.get('ASIN')
           .title= i.get('ItemAttributes/Title')
+          .author= i.get('Author')
   - else
     %p.empty
       見つかりませんでした
